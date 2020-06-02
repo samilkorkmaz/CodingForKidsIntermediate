@@ -6,11 +6,32 @@
     <style>* { padding: 0; margin: 0; } canvas { background: #eee; display: block; margin: 0 auto; }</style>
 </head>
 <body>
-
 <canvas id="myCanvas" width="480" height="320"></canvas>
 
 <script>
     //Reference: https://github.com/end3r/Gamedev-Canvas-workshop/blob/gh-pages/lesson10.html
+	
+	function sound(src) {
+		this.sound = document.createElement("audio");
+		this.sound.src = src;
+		this.sound.setAttribute("preload", "auto");
+		this.sound.setAttribute("controls", "none");
+		this.sound.style.display = "none";
+		document.body.appendChild(this.sound);
+		this.play = function () {
+			this.sound.play();
+		}
+		this.stop = function () {
+			this.sound.pause();
+		}
+	}
+	const soundLow = new sound("music-low.m4a");
+	const soundHi = new sound("music-high.m4a");
+	const soundMissed = new sound("missed.mp3");
+	const soundWin = new sound("youWin.mp3");
+	const soundLoose = new sound("youLoose.mp3");
+	
+	var gameNotStarted = true;
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
     var ballRadius = 10;
@@ -32,6 +53,11 @@
     var brickOffsetLeft = 30;
     var score = 0;
     var lives = 3;
+	
+	ctx.font = "30px Comic Sans MS";
+	ctx.fillStyle = "blue";
+	ctx.textAlign = "center";
+	ctx.fillText("Click to start...", canvas.width/2, canvas.height/2);
 
     var bricks = [];
     for(var c=0; c<brickColumnCount; c++) {
@@ -44,7 +70,15 @@
     document.addEventListener("keydown", keyDownHandler, false);
     document.addEventListener("keyup", keyUpHandler, false);
     document.addEventListener("mousemove", mouseMoveHandler, false);
-
+	document.addEventListener("click", mouseClickHandler, true);
+	
+	function mouseClickHandler(e) {
+		if(gameNotStarted) {
+			draw(); //to play sounds, the user must interact with the document first, which can be achieved via mouse click
+			gameNotStarted = false;
+		} 
+	}
+	
     function keyDownHandler(e) {
         if(e.keyCode == 39) {
             rightPressed = true;
@@ -75,8 +109,10 @@
                     if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
                         dy = -dy;
                         b.status = 0;
+						soundHi.play();
                         score++;
                         if(score == brickRowCount*brickColumnCount) {
+							soundWin.play();
                             alert("YOU WIN, CONGRATS!");
                             document.location.reload();
                         }
@@ -120,7 +156,7 @@
     function drawScore() {
         ctx.font = "16px Arial";
         ctx.fillStyle = "#0095DD";
-        ctx.fillText("Score: "+score, 8, 20);
+        ctx.fillText("Score: "+score, 60, 20);
     }
     function drawLives() {
         ctx.font = "16px Arial";
@@ -138,18 +174,23 @@
         collisionDetection();
 
         if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
+			soundLow.play();
             dx = -dx;
         }
         if(y + dy < ballRadius) {
+			soundLow.play();
             dy = -dy;
         }
         else if(y + dy > canvas.height-ballRadius) {
             if(x > paddleX && x < paddleX + paddleWidth) {
+				soundLow.play();
                 dy = -dy;
             }
             else {
                 lives--;
+				soundMissed.play();
                 if(!lives) {
+					soundLoose.play();
                     alert("GAME OVER");
                     document.location.reload();
                 }
@@ -174,8 +215,6 @@
         y += dy;
         requestAnimationFrame(draw);
     }
-
-    draw();
 </script>
 
 </body>
