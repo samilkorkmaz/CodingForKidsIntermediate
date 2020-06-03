@@ -12,9 +12,12 @@ ctx.fill();
 ctx.closePath();
 
 ctx.beginPath();
-ctx.rect(160, 10, 100, 40);
-ctx.strokeStyle = "red";
-ctx.stroke();
-ctx.fillStyle = "yellow";
+var cx = 240;
+var cy = 160;
+var r = 50;
+var angleStart_rad = 0;
+var angleEnd_rad = 2*Math.PI
+ctx.arc(cx, cy, r, angleStart_rad, angleEnd_rad);
+ctx.fillStyle = "green";
 ctx.fill();
 ctx.closePath();
