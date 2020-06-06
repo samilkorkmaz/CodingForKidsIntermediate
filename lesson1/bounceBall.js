@@ -14,9 +14,9 @@ function draw() {
     if (cy + r >= canvas.height) { //bounce from bottom
         dy = -dy0;
     }
-    /*if (cy - r <= 0) { //bounce from top
+    if (cy - r <= 0) { //bounce from top
         dy = dy0;
-    }*/
+    }
     cy += dy;
     ctx.arc(cx, cy, r, angleStart_rad, angleEnd_rad);
     ctx.fillStyle = "green";
