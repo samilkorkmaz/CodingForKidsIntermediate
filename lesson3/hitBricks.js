@@ -14,7 +14,7 @@ function createBricks() {
     for (let iRow = 0; iRow < nRow; iRow++) {
         for (let iCol = 0; iCol < nCol; iCol++) {
             var brick = {
-                w: brickWidth, h: brickHeight, 
+                w: brickWidth, h: brickHeight,
                 x: 10 + iCol * (brickWidth + 5),
                 y: 70 + iRow * (brickHeight + 10), color: defColor
             };
@@ -38,7 +38,7 @@ function animate() {
                     if (bricks[i].color === defColor) bricksHit++;
                     bricks[i].color = "lightGray"; //make brick invisible
                     dy = -dy0; //bounce downward
-                } else if (cy + radius >= bricks[i].y && cy-radius <= bricks[i].y) { //hit brick from top
+                } else if (cy + radius >= bricks[i].y && cy - radius <= bricks[i].y) { //hit brick from top
                     if (bricks[i].color === defColor) bricksHit++;
                     bricks[i].color = "lightGray"; //make brick invisible
                     dy = dy0; //bounce upward
@@ -56,7 +56,19 @@ function animate() {
     window.requestAnimationFrame(animate);
 }
 
+var ballTrail = [];
 function moveBall(cx, cy) {
+    ballTrail.push({ cx, cy });
+    if (ballTrail.length > 20) {
+        ballTrail.shift(); //remove from the beginning of the array
+    }
+    for (let i = 0; i < ballTrail.length; i++) {
+        ctx.beginPath();
+        ctx.arc(ballTrail[i].cx, ballTrail[i].cy, 1, 0, 2 * Math.PI);
+        ctx.fillStyle = "grey";
+        ctx.fill();
+        ctx.closePath();
+    }
     ctx.beginPath();
     var angleStart_rad = 0;
     var angleEnd_rad = 2 * Math.PI
