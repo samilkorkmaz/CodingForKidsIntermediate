@@ -16,7 +16,7 @@ function createBricks() {
             var brick = {
                 w: brickWidth, h: brickHeight, 
                 x: 10 + iCol * (brickWidth + 5),
-                y: 170 + iRow * (brickHeight + 10), color: defColor
+                y: 70 + iRow * (brickHeight + 10), color: defColor
             };
             bricks.push(brick);
         }
@@ -30,6 +30,7 @@ function animate() {
     moveBall(cx, cy);
     for (let i = 0; i < bricks.length; i++) {
         ctx.beginPath();
+        bricks[i].y += 0.1;
         ctx.rect(bricks[i].x, bricks[i].y, bricks[i].w, bricks[i].h);
         if (bricks[i].color !== "lightGray") { //check collision
             if (cx >= bricks[i].x && cx <= bricks[i].x + bricks[i].w) {
