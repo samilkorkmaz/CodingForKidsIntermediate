@@ -65,7 +65,7 @@ function moveBall(cx, cy) {
     for (let i = 0; i < ballTrail.length; i++) {
         ctx.beginPath();
         ctx.arc(ballTrail[i].cx, ballTrail[i].cy, 1, 0, 2 * Math.PI);
-        ctx.fillStyle = "grey";
+        ctx.fillStyle = "orange";
         ctx.fill();
         ctx.closePath();
     }
