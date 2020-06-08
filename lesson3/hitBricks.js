@@ -1,5 +1,5 @@
 var canvas = document.getElementById("myCanvas"); var ctx = canvas.getContext("2d");
-var brickWidth = 50; var brickHeight = 15; var bricks = [];
+var defColor = "blue"; var brickWidth = 50; var brickHeight = 15; var bricks = [];
 var radius = 7; var cx = radius; var cy = canvas.height - radius;
 var dx0 = 2; var dx = dx0; var dy0 = -2; var dy = dy0;
 var bricksHit = 0;
@@ -11,7 +11,7 @@ function start() {
 
 function createBricks() {
     for (let i = 0; i < 7; i++) {
-        var brick = { w: brickWidth, h: brickHeight, x: 10 + i * (brickWidth + 5), y: 60, color: "blue" };
+        var brick = { w: brickWidth, h: brickHeight, x: 10 + i * (brickWidth + 5), y: 60, color: defColor};
         bricks.push(brick);
     }
 }
@@ -26,8 +26,7 @@ function animate() {
         ctx.rect(bricks[i].x, bricks[i].y, bricks[i].w, bricks[i].h);
         if (cx >= bricks[i].x && cx <= bricks[i].x + bricks[i].w &&
             cy + radius >= bricks[i].y && cy - radius <= bricks[i].y + bricks[i].h) {
-            if (bricks[i].color === "blue") bricksHit++;
-            console.log("bricksHit: ", bricksHit)
+            if (bricks[i].color === defColor) bricksHit++;
             bricks[i].color = "red";
             dy = -dy0; //bounce
         }
