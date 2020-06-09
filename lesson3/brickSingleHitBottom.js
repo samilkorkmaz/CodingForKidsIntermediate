@@ -27,7 +27,6 @@ function checkHit(cy, radius, y) {
     if (cy + radius >= canvas.height) dy = -2; //bounce up from bottom
 }
 
-
 function moveBall(cx, cy) {
     ctx.beginPath();
     var angleStart_rad = 0;
