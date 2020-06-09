@@ -15,8 +15,7 @@ function animate() {
     checkHit(cy, radius, y);
     ctx.fillStyle = brickColor;
     ctx.fill();
-    ctx.closePath();
-    if (cy - radius <= 0) dy = 2; //bounce down from top
+    ctx.closePath();    
     window.requestAnimationFrame(animate);
 }
 
@@ -25,6 +24,7 @@ function checkHit(cy, radius, y) {
         brickColor = "red";
         dy = -2; //bounce up from brick
     }
+    if (cy - radius <= 0) dy = 2; //bounce down from top
 }
 
 function moveBall(cx, cy) {
