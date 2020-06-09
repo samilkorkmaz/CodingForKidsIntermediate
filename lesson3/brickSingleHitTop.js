@@ -12,15 +12,19 @@ function animate() {
     var x = canvas.width/2 - brickWidth/2;
     var y = 60;
     ctx.rect(x, y, brickWidth, brickHeight);
-    if (cy + radius >= y) {
-        brickColor = "red";
-        dy = -2; //bounce up from brick
-    }
+    checkHit(cy, radius, y);
     ctx.fillStyle = brickColor;
     ctx.fill();
     ctx.closePath();
     if (cy - radius <= 0) dy = 2; //bounce down from top
     window.requestAnimationFrame(animate);
+}
+
+function checkHit(cy, radius, y) {
+    if (cy + radius >= y) {
+        brickColor = "red";
+        dy = -2; //bounce up from brick
+    }
 }
 
 function moveBall(cx, cy) {
