@@ -1,9 +1,12 @@
 var canvas = document.getElementById("myCanvas"); var ctx = canvas.getContext("2d");
+nRow = 3; nCol = 7; var defBrickColor = "blue";
 var brickWidth = Math.floor(canvas.width / nCol / 10) * 10; var brickHeight = 15; var bricks = [];
 var radius = 4; var cx = radius; var cy = canvas.height - radius;
-var dx0 = 4; var dx = dx0; var dy0 = -4; var dy = dy0;
+var dxRight = 2; var dxLeft = -dxRight; var dx = dxRight; var dyUp = -2; var dyDown = -dyUp; var dy = dyUp;
 var bricksHit = 0;
-nRow = 3; nCol = 7; var defBrickColor = "blue";
+var ballTrail = [];
+
+start();
 
 function start() {
     createBricks();
@@ -26,48 +29,20 @@ function createBricks() {
 }
 
 function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    cx += dx;
-    cy += dy;
-    moveBall(cx, cy);
-    for (let i = 0; i < bricks.length; i++) {
-        bricks[i].y += 0.1; //move bricks down
-        bricks[i].isNotHit = checkHit(bricks[i].isNotHit, cx, cy, radius, bricks[i].x, bricks[i].y, bricks[i].w, bricks[i].h)
-        if (bricks[i].isNotHit) { //don't draw hit bricks
-            ctx.beginPath();
-            ctx.rect(bricks[i].x, bricks[i].y, bricks[i].w, bricks[i].h);
-            ctx.fillStyle = bricks[i].color;
-            ctx.fill();
-            ctx.closePath();
-        }
-    }
+    clearCanvas();
+    drawBall();
+    drawBricks();
+    checkBallCollisionWithCanvas(cy, radius)
     window.requestAnimationFrame(animate);
 }
 
-function checkHit(isNotHit, cx, cy, radius, x, y, w, h) {
-    if (isNotHit) {
-        if (cx >= x && cx <= x + w) {
-            if (cy - radius <= y + h && cy + radius >= y + h) { //hit brick from bottom
-                bricksHit++;
-                isNotHit = false;
-                dy = -dy0; //bounce downward
-            } else if (cy + radius >= y && cy - radius <= y) { //hit brick from top
-                bricksHit++;
-                isNotHit = false;
-                dy = dy0; //bounce upward
-            }
-        }
-    }
-    //Collision with canvas:
-    if (cy + radius >= canvas.height) dy = dy0; //bounce from bottom
-    if (cy - radius <= 0) dy = -dy0; //bounce from top
-    if (cx + radius >= canvas.width) dx = -dx0; //bounce from right
-    if (cx - radius <= 0) dx = dx0; //bounce from left
-    return isNotHit;
+function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-var ballTrail = [];
-function moveBall(cx, cy) {
+function drawBall() {
+    cx += dx;
+    cy += dy;
     ballTrail.push({ cx, cy });
     if (ballTrail.length > 20) {
         ballTrail.shift(); //remove from the beginning of the array
@@ -84,7 +59,7 @@ function moveBall(cx, cy) {
     var angleEnd_rad = 2 * Math.PI
     ctx.arc(cx, cy, radius, angleStart_rad, angleEnd_rad);
     if (bricksHit === bricks.length) {
-        ctx.fillStyle = "red";
+        ctx.fillStyle = "red"; //change ball color to red if all bricks have been hit
     } else {
         ctx.fillStyle = "green";
     }
@@ -92,4 +67,40 @@ function moveBall(cx, cy) {
     ctx.closePath();
 }
 
-start();
+function drawBricks() {
+    for (let i = 0; i < bricks.length; i++) {
+        bricks[i].y += 0.1; //move bricks down
+        bricks[i].isNotHit = checkBallCollisionWithBrick(bricks[i].isNotHit, bricks[i].x, bricks[i].y, bricks[i].w, bricks[i].h)
+        if (bricks[i].isNotHit) { //don't draw hit bricks
+            ctx.beginPath();
+            ctx.rect(bricks[i].x, bricks[i].y, bricks[i].w, bricks[i].h);
+            ctx.fillStyle = bricks[i].color;
+            ctx.fill();
+            ctx.closePath();
+        }
+    }
+}
+
+function checkBallCollisionWithBrick(isNotHit, x, y, w, h) {
+    if (isNotHit) { //Check collision only for bricks that were not hit before
+        if (cx >= x && cx <= x + w) {
+            if (cy - radius <= y + h && cy + radius >= y + h) { //hit brick from bottom
+                bricksHit++;
+                isNotHit = false;
+                dy = -dyUp; //bounce downward
+            } else if (cy + radius >= y && cy - radius <= y) { //hit brick from top
+                bricksHit++;
+                isNotHit = false;
+                dy = dyUp; //bounce upward
+            }
+        }
+    }
+    return isNotHit;
+}
+
+function checkBallCollisionWithCanvas() {
+    if (cy + radius >= canvas.height) dy = dyUp; //bounce from bottom
+    if (cy - radius <= 0) dy = dyDown; //bounce from top
+    if (cx + radius >= canvas.width) dx = dxLeft; //bounce from right
+    if (cx - radius <= 0) dx = dxRight; //bounce from left
+}
