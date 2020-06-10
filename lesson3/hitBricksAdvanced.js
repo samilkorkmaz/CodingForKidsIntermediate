@@ -31,9 +31,9 @@ function animate() {
     cy += dy;
     moveBall(cx, cy);
     for (let i = 0; i < bricks.length; i++) {
-        bricks[i].y += 0.1;
+        bricks[i].y += 0.1; //move bricks down
         bricks[i].isNotHit = checkHit(bricks[i].isNotHit, cx, cy, radius, bricks[i].x, bricks[i].y, bricks[i].w, bricks[i].h)
-        if (bricks[i].isNotHit) { //don't draw hit bricks because their lightgray color will obscure the ball
+        if (bricks[i].isNotHit) { //don't draw hit bricks
             ctx.beginPath();
             ctx.rect(bricks[i].x, bricks[i].y, bricks[i].w, bricks[i].h);
             ctx.fillStyle = bricks[i].color;
@@ -41,11 +41,6 @@ function animate() {
             ctx.closePath();
         }
     }
-    //Collision with canvas:
-    if (cy + radius >= canvas.height) dy = dy0; //bounce from bottom
-    if (cy - radius <= 0) dy = -dy0; //bounce from top
-    if (cx + radius >= canvas.width) dx = -dx0; //bounce from right
-    if (cx - radius <= 0) dx = dx0; //bounce from left
     window.requestAnimationFrame(animate);
 }
 

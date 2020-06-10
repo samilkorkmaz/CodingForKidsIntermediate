@@ -11,7 +11,11 @@ function start() {
 
 function createBricks() {
     for (let i = 0; i < 7; i++) {
-        var brick = { w: brickWidth, h: brickHeight, x: 10 + i * (brickWidth + 5), y: 60, color: "blue" };
+        var brick = {
+            w: brickWidth, h: brickHeight, x: 10 + i * (brickWidth + 5), y: 60, 
+            color: "blue",
+            isNotHit: true
+        };
         bricks.push(brick);
     }
 }
@@ -22,24 +26,38 @@ function animate() {
     cy += dy;
     moveBall(cx, cy);
     for (let i = 0; i < bricks.length; i++) {
-        ctx.beginPath();
-        ctx.rect(bricks[i].x, bricks[i].y, bricks[i].w, bricks[i].h);
-        if (cx >= bricks[i].x && cx <= bricks[i].x + bricks[i].w &&
-            cy + radius >= bricks[i].y && cy - radius <= bricks[i].y + bricks[i].h) {
-            if (bricks[i].color === "blue") bricksHit++;
-            console.log("bricksHit: ", bricksHit)
-            bricks[i].color = "red";
-            dy = -dy0; //bounce
+        bricks[i].isNotHit = checkHit(bricks[i].isNotHit, cx, cy, radius, bricks[i].x, bricks[i].y, bricks[i].w, bricks[i].h)
+        if (bricks[i].isNotHit) { //don't draw hit bricks
+            ctx.beginPath();
+            ctx.rect(bricks[i].x, bricks[i].y, bricks[i].w, bricks[i].h);
+            ctx.fillStyle = bricks[i].color;
+            ctx.fill();
+            ctx.closePath();
         }
-        ctx.fillStyle = bricks[i].color;
-        ctx.fill();
-        ctx.closePath();
     }
+    window.requestAnimationFrame(animate);
+}
+
+function checkHit(isNotHit, cx, cy, radius, x, y, w, h) {
+    if (isNotHit) {
+        if (cx >= x && cx <= x + w) {
+            if (cy - radius <= y + h && cy + radius >= y + h) { //hit brick from bottom
+                bricksHit++;
+                isNotHit = false;
+                dy = -dy0; //bounce downward
+            } else if (cy + radius >= y && cy - radius <= y) { //hit brick from top
+                bricksHit++;
+                isNotHit = false;
+                dy = dy0; //bounce upward
+            }
+        }
+    }
+    //Collision with canvas:
     if (cy + radius >= canvas.height) dy = dy0; //bounce from bottom
     if (cy - radius <= 0) dy = -dy0; //bounce from top
     if (cx + radius >= canvas.width) dx = -dx0; //bounce from right
     if (cx - radius <= 0) dx = dx0; //bounce from left
-    window.requestAnimationFrame(animate);
+    return isNotHit;
 }
 
 function moveBall(cx, cy) {
