@@ -1,9 +1,9 @@
 var canvas = document.getElementById("myCanvas"); var ctx = canvas.getContext("2d");
-nRow = 3; nCol = 7; var defBrickColor = "blue";
 var brickWidth = Math.floor(canvas.width / nCol / 10) * 10; var brickHeight = 15; var bricks = [];
 var radius = 4; var cx = radius; var cy = canvas.height - radius;
 var dx0 = 4; var dx = dx0; var dy0 = -4; var dy = dy0;
 var bricksHit = 0;
+nRow = 3; nCol = 7; var defBrickColor = "blue";
 
 function start() {
     createBricks();
