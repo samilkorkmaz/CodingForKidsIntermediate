@@ -8,18 +8,18 @@ function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     cy += dy;
     moveBall(cx, cy);
-    ctx.beginPath();
     var x = canvas.width/2 - brickWidth/2;
     var y = 60;
+    checkHit(cy, radius, y, brickHeight);
+    ctx.beginPath();    
     ctx.rect(x, y, brickWidth, brickHeight);
-    checkHit(cy, radius, y);
     ctx.fillStyle = brickColor;
     ctx.fill();
     ctx.closePath();    
     window.requestAnimationFrame(animate);
 }
 
-function checkHit(cy, radius, y) {
+function checkHit(cy, radius, y, h) {
     if (cy + radius >= y) {
         brickColor = "red";
         dy = -2; //bounce up from brick
