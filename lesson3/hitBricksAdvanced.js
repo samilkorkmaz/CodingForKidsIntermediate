@@ -1,5 +1,5 @@
 var canvas = document.getElementById("myCanvas"); var ctx = canvas.getContext("2d");
-nRow = 3; nCol = 7; var defBrickColor = "blue";
+nRow = 3; nCol = 7;
 var brickWidth = Math.floor(canvas.width / nCol / 10) * 10; var brickHeight = 15; var bricks = [];
 var radius = 4; var cx = radius; var cy = canvas.height - radius;
 var dxRight = 2; var dxLeft = -dxRight; var dx = dxRight; var dyUp = -2; var dyDown = -dyUp; var dy = dyUp;
@@ -20,7 +20,7 @@ function createBricks() {
                 w: brickWidth, h: brickHeight,
                 x: 10 + iCol * (brickWidth + 5),
                 y: 70 + iRow * (brickHeight + 10),
-                color: defBrickColor,
+                color: "blue",
                 isNotHit: true
             };
             bricks.push(brick);
