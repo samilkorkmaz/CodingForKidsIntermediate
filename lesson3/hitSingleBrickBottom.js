@@ -1,8 +1,10 @@
 var canvas = document.getElementById("myCanvas"); var ctx = canvas.getContext("2d");
 var brickWidth = 50; var brickHeight = 15;
-var radius = 7; var cx = canvas.width/2; var cy = canvas.height - radius;
-var dy = -2; //initial motion is up
+var radius = 7; var cx = canvas.width / 2; var cy = canvas.height - radius;
+var dyDown = 2; var dyUp = -dyDown; var dy = dyUp; //initial motion is up
 var brickColor = "blue"
+var x = canvas.width / 2 - brickWidth / 2;
+var y = 60;
 
 animate();
 
@@ -30,23 +32,21 @@ function drawBall() {
 }
 
 function drawBricks() {
-    var x = canvas.width/2 - brickWidth/2;
-    var y = 60;
-    checkBallCollisionWithBrick(cy, radius, y, brickHeight);
-    ctx.beginPath();    
+    checkBallCollisionWithBrick();
+    ctx.beginPath();
     ctx.rect(x, y, brickWidth, brickHeight);
     ctx.fillStyle = brickColor;
     ctx.fill();
     ctx.closePath();
 }
 
-function checkBallCollisionWithBrick(cy, radius, y, h) {
-    if (cy - radius <= y + h) { //ball hits bottom of brick
+function checkBallCollisionWithBrick() {
+    if (cy - radius <= y + brickHeight) { //ball hits bottom of brick
         brickColor = "red";
-        dy = 2; //bounce down from brick
+        dy = dyDown; //bounce down from brick
     }
 }
 
 function checkBallCollisionWithCanvas() {
-    if (cy + radius >= canvas.height) dy = -2; //bounce up from bottom
+    if (cy + radius >= canvas.height) dy = dyUp; //bounce up from bottom
 }
