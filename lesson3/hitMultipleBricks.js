@@ -14,7 +14,10 @@ function start() {
 function createBricks() {
     for (let i = 0; i < 7; i++) {
         var brick = {
-            w: brickWidth, h: brickHeight, x: 10 + i * (brickWidth + 5), y: 60, 
+            x: 10 + i * (brickWidth + 5), 
+            y: 60, 
+            w: brickWidth, 
+            h: brickHeight,            
             color: "blue",
             isNotHit: true
         };

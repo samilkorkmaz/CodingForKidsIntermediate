@@ -17,9 +17,10 @@ function createBricks() {
     for (let iRow = 0; iRow < nRow; iRow++) {
         for (let iCol = 0; iCol < nCol; iCol++) {
             var brick = {
-                w: brickWidth, h: brickHeight,
                 x: 10 + iCol * (brickWidth + 5),
                 y: 70 + iRow * (brickHeight + 10),
+                w: brickWidth, 
+                h: brickHeight,                
                 color: "blue",
                 isNotHit: true
             };
