@@ -1,18 +1,18 @@
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 var r = 50;
-var cx = 240;
-var cy = r;
+var cx = r;
+var cy = 150;
 var angleStart_rad = 0;
 var angleEnd_rad = 2 * Math.PI
-var dy = 2;
+var dx = 2;
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.beginPath();
-    cy += dy;
-    if (cy + r >= canvas.height) { //bounce from bottom
-        dy = -2;
+    cx += dx;
+    if (cx + r >= canvas.width) { //bounce from right
+        dx = -2;
+        isPaused = true;
     }
 
     ctx.beginPath();

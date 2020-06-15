@@ -5,8 +5,7 @@ var cx = 240;
 var cy = r;
 var angleStart_rad = 0;
 var angleEnd_rad = 2 * Math.PI
-var dy0 = 2;
-var dy = dy0;
+var dy = 2;
 ctx.font = "22px Arial";
 canvas.addEventListener("mousedown", MouseDownHandler, false);
 var isPaused = false;
@@ -21,11 +20,11 @@ function draw() {
         ctx.beginPath();
         cy += dy;
         if (cy + r >= canvas.height) { //bounce from bottom
-            dy = -dy0;
+            dy = -2;
             isPaused = true;
         }
         if (cy - r <= 0) { //bounce from top
-            dy = dy0;
+            dy = 2;
             isPaused = true;
         }
 
@@ -37,6 +36,8 @@ function draw() {
             ctx.fillStyle = "blue"; ctx.fillText("dy = " + dy, cx - 150, cy);
         }
 
+        drawCircle("red", 0, 0, 3);
+        drawCircle("red", 0, canvas.height, 3);
         drawCircle("green", cx, cy, r);
         drawCircle("black", cx, cy, 3);
         drawCircle("red", cx, cy + r, 3);
@@ -52,7 +53,7 @@ function draw() {
 
         ctx.fillStyle = "blue"; ctx.fillText("cy-r = " + (cy - r), cx + 2, cy - r + 15);
         ctx.fillStyle = "black"; ctx.fillText("cy = " + cy, cx + 2, cy + 5);
-        ctx.fillStyle = "blue"; ctx.fillText("cy+r = " + (cy + r), cx + 2, cy + r);
+        ctx.fillStyle = "blue"; ctx.fillText("cy+r = " + (cy + r), cx + 2, cy + r - 5);
         ctx.fillStyle = "black"; ctx.fillText("y = 0", 0, 15);
         ctx.fillStyle = "black"; ctx.fillText("y = canvas.height = " + canvas.height, 0, canvas.height - 5);
     }
