@@ -31,14 +31,16 @@ function draw() {
 
         if (dy < 0) {
             drawUpArrow("red", cx - 170, cy - 30);
+            ctx.fillStyle = "red"; ctx.fillText("dy = " + dy, cx - 150, cy);
         } else {
             drawDownArrow("blue", cx - 170, cy - 30);
+            ctx.fillStyle = "blue"; ctx.fillText("dy = " + dy, cx - 150, cy);
         }
 
         drawCircle("green", cx, cy, r);
-        drawCircle("black", cx, cy, 2);
-        drawCircle("red", cx, cy + r, 2);
-        drawCircle("red", cx, cy - r, 2);
+        drawCircle("black", cx, cy, 3);
+        drawCircle("red", cx, cy + r, 3);
+        drawCircle("red", cx, cy - r, 3);
 
         //diameter line:
         ctx.beginPath();
@@ -49,9 +51,8 @@ function draw() {
         ctx.stroke();
 
         ctx.fillStyle = "blue"; ctx.fillText("cy-r = " + (cy - r), cx + 2, cy - r + 15);
-        ctx.fillStyle = "black"; ctx.fillText("cy = " + cy, cx + 2, cy+5);
+        ctx.fillStyle = "black"; ctx.fillText("cy = " + cy, cx + 2, cy + 5);
         ctx.fillStyle = "blue"; ctx.fillText("cy+r = " + (cy + r), cx + 2, cy + r);
-        ctx.fillStyle = "black"; ctx.fillText("dy = " + dy, cx - 150, cy);
         ctx.fillStyle = "black"; ctx.fillText("y = 0", 0, 15);
         ctx.fillStyle = "black"; ctx.fillText("y = canvas.height = " + canvas.height, 0, canvas.height - 5);
     }
