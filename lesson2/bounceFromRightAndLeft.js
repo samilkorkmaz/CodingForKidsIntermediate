@@ -10,6 +10,11 @@ ctx.font = "20px Arial";
 canvas.addEventListener("mousedown", MouseDownHandler, false);
 var isPaused = false;
 
+document.onkeydown = function(e) {
+	if(e.keyCode == 37) isPaused = false; //left
+	if(e.keyCode == 39) isPaused = false;//right
+}
+
 function MouseDownHandler() {
     isPaused = !isPaused;
 }
@@ -58,6 +63,7 @@ function draw() {
         ctx.fillStyle = "black"; ctx.fillText("x = 0", 0, 15);
         ctx.fillStyle = "black"; ctx.fillText("x = canvas.width = " + canvas.width, canvas.width - 210, 15);
     }
+    isPaused = true;
     window.requestAnimationFrame(draw);
 }
 

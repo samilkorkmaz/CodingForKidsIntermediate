@@ -7,12 +7,18 @@ var angleStart_rad = 0;
 var angleEnd_rad = 2 * Math.PI
 var dy = 2;
 ctx.font = "22px Arial";
-canvas.addEventListener("mousedown", MouseDownHandler, false);
+canvas.addEventListener("mousedown", handleMouseDown, false);
 var isPaused = false;
 
-function MouseDownHandler() {
+document.onkeydown = function(e) {
+	if(e.keyCode == 38) isPaused = false; //up
+	if(e.keyCode == 40) isPaused = false;//down
+}
+
+function handleMouseDown() {
     isPaused = !isPaused;
 }
+
 
 function draw() {
     if (!isPaused) {
@@ -57,6 +63,7 @@ function draw() {
         ctx.fillStyle = "black"; ctx.fillText("y = 0", 0, 15);
         ctx.fillStyle = "black"; ctx.fillText("y = canvas.height = " + canvas.height, 0, canvas.height - 5);
     }
+    isPaused = true;
     window.requestAnimationFrame(draw);
 }
 
