@@ -1,0 +1,101 @@
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+var r = 50;
+var cx = 240;
+var cy = r;
+var angleStart_rad = 0;
+var angleEnd_rad = 2 * Math.PI
+var dy0 = 2;
+var dy = dy0;
+ctx.font = "22px Arial";
+canvas.addEventListener("mousedown", MouseDownHandler, false);
+var isPaused = false;
+
+function MouseDownHandler() {
+    isPaused = !isPaused;
+}
+
+function draw() {
+    if (!isPaused) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        cy += dy;
+        if (cy + r >= canvas.height) { //bounce from bottom
+            dy = -dy0;
+            isPaused = true;
+        }
+        if (cy - r <= 0) { //bounce from top
+            dy = dy0;
+            isPaused = true;
+        }
+
+        if (dy < 0) {
+            drawUpArrow("red", cx - 170, cy - 30);
+        } else {
+            drawDownArrow("blue", cx - 170, cy - 30);
+        }
+
+        drawCircle("green", cx, cy, r);
+        drawCircle("black", cx, cy, 2);
+        drawCircle("red", cx, cy + r, 2);
+        drawCircle("red", cx, cy - r, 2);
+
+        //diameter line:
+        ctx.beginPath();
+        ctx.moveTo(cx, cy - r);
+        ctx.lineTo(cx, cy + r);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "black";
+        ctx.stroke();
+
+        ctx.fillStyle = "blue"; ctx.fillText("cy-r = " + (cy - r), cx + 2, cy - r + 15);
+        ctx.fillStyle = "black"; ctx.fillText("cy = " + cy, cx + 2, cy+5);
+        ctx.fillStyle = "blue"; ctx.fillText("cy+r = " + (cy + r), cx + 2, cy + r);
+        ctx.fillStyle = "black"; ctx.fillText("dy = " + dy, cx - 150, cy);
+        ctx.fillStyle = "black"; ctx.fillText("y = 0", 0, 15);
+        ctx.fillStyle = "black"; ctx.fillText("y = canvas.height = " + canvas.height, 0, canvas.height - 5);
+    }
+    window.requestAnimationFrame(draw);
+}
+
+function drawCircle(color, cx, cy, r) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.arc(cx, cy, r, angleStart_rad, angleEnd_rad);
+    ctx.fill();
+    ctx.closePath();
+}
+
+function drawDownArrow(color, x, y) {
+    drawArrow(color, x, y, true)
+}
+
+function drawUpArrow(color, x, y) {
+    drawArrow(color, x, y, false)
+}
+
+function drawArrow(color, x, y, isDown) {
+    ctx.beginPath();
+    ctx.rect(x, y, 6, r);
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    if (isDown) {
+        ctx.moveTo(x - 5, y + r);
+        ctx.lineTo(x + 11, y + r);
+        ctx.lineTo(x + 3, y + r + 8);
+        ctx.lineTo(x - 5, y + r);
+    } else {
+        ctx.moveTo(x - 5, y);
+        ctx.lineTo(x + 11, y);
+        ctx.lineTo(x + 3, y - 8);
+        ctx.lineTo(x - 5, y);
+    }
+    ctx.fill();
+    ctx.closePath();
+}
+
+draw();
