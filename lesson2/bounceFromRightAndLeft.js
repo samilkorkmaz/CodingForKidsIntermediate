@@ -1,11 +1,11 @@
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 var r = 50;
-var cx = r;
+var dx = 2;
+var cx = r-dx;
 var cy = 150;
 var angleStart_rad = 0;
 var angleEnd_rad = 2 * Math.PI
-var dx = 2;
 ctx.font = "20px Arial";
 canvas.addEventListener("mousedown", MouseDownHandler, false);
 var isPaused = false;
