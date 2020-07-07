@@ -1,5 +1,5 @@
 var canvas = document.getElementById("myCanvas"); var ctx = canvas.getContext("2d");
-var brickWidth = 50; var brickHeight = 15; var bricks = [];
+var brickWidth = 50; var brickHeight = 20; var bricks = [];
 
 start();
 
@@ -12,7 +12,7 @@ function createBricks() {
     for (let i = 0; i < 7; i++) {
         var brick = {
             x: 10 + i * (brickWidth + 5), 
-            y: 60, 
+            y: 70, 
             w: brickWidth, 
             h: brickHeight,            
             color: "blue"
