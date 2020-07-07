@@ -1,7 +1,7 @@
 var canvas = document.getElementById("myCanvas"); var ctx = canvas.getContext("2d");
 var brickWidth = 50; var brickHeight = 26;
 var r = 30; var cx = canvas.width - r; var cy = 100;
-var dxRight = 2; var dxLeft = -dxRight; var dx = dxLeft; //initial motion is to the left
+var dx = -2; //initial motion is to the left
 var brickColor = "blue"
 var brickX = 240 - brickWidth / 2;
 var brickY = cy - brickHeight / 2;
@@ -43,10 +43,10 @@ function drawBricks() {
 function checkBallCollisionWithBrick() {
     if (cx - r <= brickX + brickWidth) { //ball hits right side of brick
         brickColor = "red";
-        dx = dxRight; //bounce right from brick right side
+        dx = -dx; //bounce right from brick right side
     }
 }
 
 function checkBallCollisionWithCanvas() {
-    if (cx + r >= canvas.width) dx = dxLeft; //bounce left from right wall
+    if (cx + r >= canvas.width) dx = -dx; //bounce left from right wall
 }

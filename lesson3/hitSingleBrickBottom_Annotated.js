@@ -1,7 +1,7 @@
 var canvas = document.getElementById("myCanvas"); var ctx = canvas.getContext("2d");
 var brickWidth = 50; var brickHeight = 26;
 var r = 30; var cx = 240; var cy = canvas.height - r;
-var dyDown = 2; var dyUp = -dyDown; var dy = dyUp; //initial motion is up
+var dy = -2; //initial motion is up
 var brickColor = "blue"
 var brickX = cx- brickWidth / 2;
 var brickY = 100;
@@ -82,12 +82,12 @@ function drawBricks() {
 function checkBallCollisionWithBrick() {
     if (cy - r <= brickY + brickHeight) { //ball hits bottom of brick
         brickColor = "red";
-        dy = dyDown; //bounce down from brick
+        dy = -dy; //bounce down from brick
     }
 }
 
 function checkBallCollisionWithCanvas() {
-    if (cy + r >= canvas.height) dy = dyUp; //bounce up from bottom
+    if (cy + r >= canvas.height) dy = -dy; //bounce up from bottom
 }
 
 function drawDownArrow(color, x, y) {
