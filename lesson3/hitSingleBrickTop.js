@@ -1,10 +1,10 @@
 var canvas = document.getElementById("myCanvas"); var ctx = canvas.getContext("2d");
-var brickWidth = 50; var brickHeight = 15;
-var radius = 7; var cx = canvas.width / 2; var cy = 0;
-var dyDown = 2; var dyUp = -dyDown; var dy = dyDown; //initial motion is down
+var brickWidth = 50; var brickHeight = 26;
+var r = 30; var cx = 240; var cy = r;
+var dy = 2; //initial motion is down
 var brickColor = "blue"
-var x = canvas.width / 2 - brickWidth / 2;
-var y = 60;
+var brickX = cx - brickWidth / 2;
+var brickY = 100;
 
 animate();
 
@@ -25,7 +25,7 @@ function drawBall() {
     ctx.beginPath();
     var angleStart_rad = 0;
     var angleEnd_rad = 2 * Math.PI
-    ctx.arc(cx, cy, radius, angleStart_rad, angleEnd_rad);
+    ctx.arc(cx, cy, r, angleStart_rad, angleEnd_rad);
     ctx.fillStyle = "green";
     ctx.fill();
     ctx.closePath();
@@ -34,19 +34,19 @@ function drawBall() {
 function drawBricks() {
     checkBallCollisionWithBrick();
     ctx.beginPath();
-    ctx.rect(x, y, brickWidth, brickHeight);
+    ctx.rect(brickX, brickY, brickWidth, brickHeight);
     ctx.fillStyle = brickColor;
     ctx.fill();
     ctx.closePath();
 }
 
 function checkBallCollisionWithBrick() {
-    if (cy + radius >= y) {  //ball hits top of brick
+    if (cy + r >= brickY) {  //ball hits top of brick
         brickColor = "red";
-        dy = dyUp; //bounce up from brick
+        dy = -dy; //bounce up from brick
     }
 }
 
 function checkBallCollisionWithCanvas() {
-    if (cy - radius <= 0) dy = dyDown; //bounce down from top
+    if (cy - r <= 0) dy = -dy; //bounce down from top
 }

@@ -27,7 +27,7 @@ function drawBall() {
     ctx.beginPath();
     var angleStart_rad = 0;
     var angleEnd_rad = 2 * Math.PI
-    ctx.arc(cx, cy, radius, angleStart_rad, angleEnd_rad);
+    ctx.arc(cx, cy, r, angleStart_rad, angleEnd_rad);
     ctx.fillStyle = "green";
     ctx.fill();
     ctx.closePath();
