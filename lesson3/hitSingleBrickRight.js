@@ -1,23 +1,25 @@
 var canvas = document.getElementById("myCanvas"); var ctx = canvas.getContext("2d");
-var brickWidth = 50; var brickHeight = 15;
-var radius = 7; var cx = canvas.width - radius; var cy = canvas.height / 2;
-var dxRight = 2; var dxLeft = -dxRight; var dx = dxLeft; //initial motion is to the left
+var brickWidth = 15; var brickHeight = 50;
+var brickX = 30; var brickY = (canvas.height - brickHeight)/2;
+var radius = 7; var cx = canvas.width / 2; var cy = canvas.height/2;
 var brickColor = "blue"
-var x = canvas.width / 2 - brickWidth / 2;
-var y = cy - brickHeight / 2;
+
+var dx = -2; //move left
 
 animate();
 
 function animate() {
-    clearCanvas();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBall();
     drawBricks();
-    checkBallCollisionWithCanvas()
-    window.requestAnimationFrame(animate);
-}
+    if (cx + radius >= canvas.width) { //ball hits right side of canvas
+        dx = -2; //move left
+    } 
 
-function clearCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (cx - radius <= brickX + brickWidth) { //ball hits right side of brick
+        dx = 2; //move right
+    } 
+    window.requestAnimationFrame(animate);
 }
 
 function drawBall() {
@@ -32,21 +34,9 @@ function drawBall() {
 }
 
 function drawBricks() {
-    checkBallCollisionWithBrick();
     ctx.beginPath();
-    ctx.rect(x, y, brickWidth, brickHeight);
+    ctx.rect(brickX, brickY, brickWidth, brickHeight);
     ctx.fillStyle = brickColor;
     ctx.fill();
     ctx.closePath();
-}
-
-function checkBallCollisionWithBrick() {
-    if (cx - radius <= x + brickWidth) { //ball hits right side of brick
-        brickColor = "red";
-        dx = dxRight; //bounce right from brick right side
-    }
-}
-
-function checkBallCollisionWithCanvas() {
-    if (cx + radius >= canvas.width) dx = dxLeft; //bounce left from right wall
 }
