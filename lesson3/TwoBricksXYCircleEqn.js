@@ -5,7 +5,7 @@ var brick2X = canvas.width - 20 - brickWidth; var brick2Y = (canvas.height - bri
 var ballRadius = 20; var ballX = canvas.width / 2; var ballY = canvas.height/2;
 var brickColor = "blue"
 
-var speed = 4;
+var speed = 1;
 var dx = -speed; //move left
 var dy = -speed; //move up
 
@@ -37,13 +37,13 @@ function animate() {
     var brick1Top = brick1Y;
     var brick1Bottom = brick1Y + brickHeight;
     var brick1Right = brick1X + brickWidth;
-    if (intersects(ballX, ballY, ballRadius, brick1X-brickWidth/2, brick1Y+brickHeight/2, brickWidth, brickHeight)) { //ball hits right side of brick
+    if (intersects(ballX, ballY, ballRadius, brick1X + brickWidth/2, brick1Y + brickHeight/2, brickWidth, brickHeight)) { //ball hits right side of brick
         dx = speed; //move right
     } 
     var brick2Top = brick2Y;
     var brick2Bottom = brick2Y + brickHeight;
     var brick2Left = brick2X;
-    if (intersects(ballX, ballY, ballRadius, brick2X+brickWidth/2, brick2Y+brickHeight/2, brickWidth, brickHeight)) { //ball hits left side of brick
+    if (intersects(ballX, ballY, ballRadius, brick2X + brickWidth/2, brick2Y + brickHeight/2, brickWidth, brickHeight)) { //ball hits left side of brick
         dx = -speed; //move left
     }
     window.requestAnimationFrame(animate);
