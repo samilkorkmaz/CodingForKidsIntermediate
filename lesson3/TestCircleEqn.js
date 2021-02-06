@@ -9,6 +9,47 @@ var speed = 1;
 var dx = -speed; //move left
 var dy = -speed; //move up
 
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+const upArrowKeyCode = 38;
+const downArrowKeyCode = 40;
+const wKeyCode = 87;
+const sKeyCode = 83;
+var upArrowPressed = false;
+var downArrowPressed = false;
+var wPressed = false;
+var sPressed = false;
+function keyDownHandler(e) {
+    //console.log(e.keyCode);
+    if(e.keyCode == upArrowKeyCode) {
+        upArrowPressed = true;
+    }
+    else if(e.keyCode == downArrowKeyCode) {
+        downArrowPressed = true;
+    }
+    if(e.keyCode == wKeyCode) {
+        wPressed = true;
+    }
+    else if(e.keyCode == sKeyCode) {
+        sPressed = true;
+    }
+}
+
+function keyUpHandler(e) {
+    if(e.keyCode == upArrowKeyCode) {
+        upArrowPressed = false;
+    }
+    else if(e.keyCode == downArrowKeyCode) {
+        downArrowPressed = false;
+    }
+    if(e.keyCode == wKeyCode) {
+        wPressed = false;
+    }
+    else if(e.keyCode == sKeyCode) {
+        sPressed = false;
+    }
+}
+
 animate();
 
 function animate() {
@@ -66,8 +107,8 @@ function intersects(circleX, circleY, circleRadius, rectX, rectY, rectWidth, rec
 }
 
 function drawBall() {
-    ballX += dx;
-    ballY += dy;
+    if(downArrowPressed) ballX += dx;
+    //ballY += dy;
     ctx.beginPath();
     var angleStart_rad = 0;
     var angleEnd_rad = 2 * Math.PI

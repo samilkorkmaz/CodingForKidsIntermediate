@@ -101,16 +101,15 @@ function animate() {
   Return true if circle and rect intersect */
 function intersects(circleX, circleY, circleRadius, rectX, rectY, rectWidth, rectHeight)
 {
-    var circleDistanceX = Math.abs(circleX - rectX);
-    var circleDistanceY = Math.abs(circleY - rectY);
+    var distanceX = Math.abs(circleX - rectX);
+    var distanceY = Math.abs(circleY - rectY);
 
-    if (circleDistanceX > (rectWidth/2 + circleRadius)) { return false; }
-    if (circleDistanceY > (rectHeight/2 + circleRadius)) { return false; }
+    if (distanceX > circleRadius + rectWidth/2) { return false; }
+    if (distanceY > circleRadius + rectHeight/2) { return false; }
 
-    if (circleDistanceX <= (rectWidth/2)) { return true; } 
-    if (circleDistanceY <= (rectHeight/2)) { return true; }
+    if ((distanceX <= circleRadius + rectWidth/2) && (distanceY <= circleRadius + rectHeight/2)) { return true; } 
 
-    cornerDistance_sq = Math.pow(circleDistanceX - rectWidth/2, 2) +  Math.pow(circleDistanceY - rectHeight/2, 2);
+    cornerDistance_sq = Math.pow(distanceX, 2) +  Math.pow(distanceY, 2);
     return (cornerDistance_sq <= Math.pow(circleRadius, 2));
 }
 
