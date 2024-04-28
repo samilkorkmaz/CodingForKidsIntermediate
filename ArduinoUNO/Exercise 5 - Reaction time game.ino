@@ -25,8 +25,7 @@ void loop() {
 	Serial.println("Go!");
 	unsigned long time_ms = millis();
 	digitalWrite(ledPin, HIGH);
-	while   (digitalRead(buttonPin) == 0) {
-	}
+	while (digitalRead(buttonPin) == 0) {} //wait for button press
 	digitalWrite(ledPin, LOW);
 	Serial.println("Your time was");
 	time_ms = millis()-time_ms;
