@@ -20,6 +20,22 @@ void setup() {
   pinMode(buttonPin, INPUT_PULLUP); // Using internal pull-up resistor
 }
 
+void updateTrafficLights(int state) {
+  // Turn off all LEDs
+  digitalWrite(redLED, LOW);
+  digitalWrite(yellowLED, LOW);
+  digitalWrite(greenLED, LOW);
+  
+  // Turn on the current LED
+  if (state == 0) {
+    digitalWrite(greenLED, HIGH);
+  } else if (state == 1) {
+    digitalWrite(yellowLED, HIGH);
+  } else if (state == 2) {
+    digitalWrite(redLED, HIGH);
+  }
+}
+
 void loop() {
   int buttonState = digitalRead(buttonPin);
   
@@ -42,20 +58,4 @@ void loop() {
   
   // Save the current state as the last state, for next time through the loop
   lastButtonState = buttonState;
-}
-
-void updateTrafficLights(int state) {
-  // Turn off all LEDs
-  digitalWrite(redLED, LOW);
-  digitalWrite(yellowLED, LOW);
-  digitalWrite(greenLED, LOW);
-  
-  // Turn on the current LED
-  if (state == 0) {
-    digitalWrite(greenLED, HIGH);
-  } else if (state == 1) {
-    digitalWrite(yellowLED, HIGH);
-  } else if (state == 2) {
-    digitalWrite(redLED, HIGH);
-  }
 }
