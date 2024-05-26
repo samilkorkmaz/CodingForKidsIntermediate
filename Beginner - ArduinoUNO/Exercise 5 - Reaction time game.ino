@@ -9,13 +9,17 @@ void setup() {
   pinMode(buttonPin, INPUT);
 }
 
+void printSeconds(unsigned long time_ms) {
+  Serial.print(time_ms / 1000.0, 3);
+  Serial.print(" seconds");
+}
+
 void loop() {
   Serial.println("");
   Serial.print("Push the button to start game");
   if (minTime_ms < 999) {
     Serial.print(". Your best time: ");
-    Serial.print(minTime_ms / 1000.0, 3);
-    Serial.print(" seconds");
+    printSeconds(minTime_ms);
   }
   Serial.println("");
   while (digitalRead(buttonPin) == 0) {
@@ -45,13 +49,13 @@ void loop() {
   digitalWrite(ledPin, LOW);
   Serial.println("Your time was");
   time_ms = millis() - time_ms;
-  Serial.print(time_ms / 1000.0, 3);
-  Serial.println(" seconds");
+  printSeconds(time_ms);
+  Serial.println("");
   if (time_ms < minTime_ms) {
     if (minTime_ms < 999) {
     	Serial.print("You beat your previous best of ");
-    	Serial.print(minTime_ms / 1000.0, 3);
-    	Serial.println(" seconds");
+    	printSeconds(minTime_ms);
+      	Serial.println("");
     }
     minTime_ms = time_ms;
   }
