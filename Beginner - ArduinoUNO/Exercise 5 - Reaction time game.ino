@@ -22,8 +22,8 @@ void loop() {
   Serial.print(startDelay_ms);
   Serial.println(" ms");
 
-  unsigned long startTime = millis();
-  while (millis() - startTime < startDelay_ms) {
+  unsigned long startTime_ms = millis();
+  while (millis() - startTime_ms < startDelay_ms) {
     if (digitalRead(buttonPin) == 1) {
       Serial.println("You pressed too early! You failed.");
       delay(2000); // Short delay before restarting the game
