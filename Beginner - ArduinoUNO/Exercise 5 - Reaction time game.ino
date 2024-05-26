@@ -1,4 +1,4 @@
-// Reaction time game
+// Reaction time game, modified from https://projecthub.arduino.cc/rowan07/a-simple-reflex-game-dcd2c8
 int ledPin = 13;
 int buttonPin = 2;
 unsigned long minTime_ms = 999;
