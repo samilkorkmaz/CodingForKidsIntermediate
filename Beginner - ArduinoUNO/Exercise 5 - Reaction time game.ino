@@ -1,6 +1,7 @@
 // Reaction time game
 int ledPin = 13;
 int buttonPin = 2;
+unsigned long minTime_ms = 999;
 
 void setup() {
   Serial.begin(9600);
@@ -10,7 +11,13 @@ void setup() {
 
 void loop() {
   Serial.println("");
-  Serial.println("Push the button to start game");
+  Serial.print("Push the button to start game");
+  if (minTime_ms < 999) {
+    Serial.print(". Your best time: ");
+    Serial.print(minTime_ms / 1000.0, 3);
+    Serial.print(" seconds");
+  }
+  Serial.println("");
   while (digitalRead(buttonPin) == 0) {
   }
   Serial.println("");
@@ -38,7 +45,15 @@ void loop() {
   digitalWrite(ledPin, LOW);
   Serial.println("Your time was");
   time_ms = millis() - time_ms;
-  Serial.print(time_ms / 1000.0, 2);
+  Serial.print(time_ms / 1000.0, 3);
   Serial.println(" seconds");
+  if (time_ms < minTime_ms) {
+    if (minTime_ms < 999) {
+    	Serial.print("You beat your previous best of ");
+    	Serial.print(minTime_ms / 1000.0, 3);
+    	Serial.println(" seconds");
+    }
+    minTime_ms = time_ms;
+  }
   delay(2000); 
 }
